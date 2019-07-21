@@ -7,9 +7,10 @@ import {
   withStyles
 } from "@material-ui/core";
 import Brightness from "@material-ui/icons/Brightness2Outlined";
-import { connect } from 'react-redux';
-import * as actionTypes from '../../store/actions/themeSwitchAction'
+import { connect } from "react-redux";
+import * as actionTypes from "../../store/actions/themeSwitchAction";
 import { sizeHeight } from "@material-ui/system";
+import { mapStateToProps } from "../../store/mapStateToProps";
 
 const styles = theme => ({
   title: {
@@ -18,28 +19,26 @@ const styles = theme => ({
     // Match [md, ∞[
     //       [960px, ∞[
     [theme.breakpoints.down("xs")]: {
-
       fontSize: "15px",
       fontWeight: "800"
     }
   },
 
   toolbar: {
-      minHeight: 52,
+    minHeight: 52,
     [theme.breakpoints.down("xs")]: {
       minHeight: 96
     }
   },
 
   themeSwitcher: {
-    marginLeft: 'auto',
+    marginLeft: "auto",
     color: theme.palette.primary.contrastText
- 
   },
 
   themeSwitcherText: {
-      fontWeight: 400,
-      fontSize: 16,
+    fontWeight: 400,
+    fontSize: 16,
     [theme.breakpoints.down("xs")]: {
       display: "none"
     }
@@ -48,18 +47,22 @@ const styles = theme => ({
 
 const Nav = props => {
   const { classes } = props;
-  
+
   return (
     <div>
-      <AppBar color='primary'>
+      <AppBar color="primary">
         <Toolbar className={classes.toolbar}>
           <Typography className={classes.title} variant="h4">
             Where in the world?
             {}
           </Typography>
-          <IconButton className={classes.themeSwitcher} onClick={props.onClick} >
+          <IconButton className={classes.themeSwitcher} onClick={props.onClick}>
             <Brightness />
-            <Typography variant="button" className={classes.themeSwitcherText} variant='h6'>
+            <Typography
+              variant="button"
+              className={classes.themeSwitcherText}
+              variant="h6"
+            >
               Dark Mode
             </Typography>
           </IconButton>
@@ -69,14 +72,13 @@ const Nav = props => {
   );
 };
 
-const mapStateToProps = state => ({
-    palette: state.theme.lightMode
-})
-
 const mapDispatchToProps = dispatch => {
-    return {
-        onClick: () => dispatch({type: actionTypes.SWITCH_THEME})
-    }
-}
+  return {
+    onClick: () => dispatch({ type: actionTypes.SWITCH_THEME })
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Nav));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(Nav));
