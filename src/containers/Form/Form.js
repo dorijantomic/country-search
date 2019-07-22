@@ -5,6 +5,7 @@ import {
   FormControl,
   InputLabel
 } from "@material-ui/core";
+import Search from "@material-ui/icons/Search";
 import { connect } from "react-redux";
 import { mapStateToProps } from "../../store/mapStateToProps";
 import { withStyles } from "@material-ui/core/styles";
@@ -22,21 +23,43 @@ const styles = theme => ({
     color: theme.palette.primary.contrastText
   },
   input: {
-    backgroundColor: mapStateToProps.mode ? theme.palette.primary.inputs : theme.palette.primary.main,
+    backgroundColor: mapStateToProps.mode
+      ? theme.palette.primary.inputs
+      : theme.palette.primary.main,
     color: theme.palette.primary.contrastText,
-    marginBottom: '22px'
+    marginBottom: "22px"
   },
   selectList: {
-    backgroundColor: mapStateToProps.mode ? theme.palette.primary.inputs : theme.palette.primary.main,
-    color: theme.palette.primary.contrastText,
-
+    backgroundColor: mapStateToProps.mode
+      ? theme.palette.primary.inputs
+      : theme.palette.primary.main,
+    color: theme.palette.primary.contrastText
   },
- 
+
   options: {
     display: "none",
     "&:hover": {
       backgroundColor: "#f00"
     }
+  },
+  search: {
+    position: 'relative',
+    marginLeft: 0,
+    width: '100%',
+  },
+  searchIcon: {
+    width: theme.spacing(7),
+    height: '80%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: '1'
+  },
+
+  insideInput: {
+    marginLeft: '45px'
   }
 });
 const Form = props => {
@@ -45,12 +68,17 @@ const Form = props => {
   return (
     <form action={e => e.preventDefault()} className={classes.form}>
       <FormControl>
-        <OutlinedInput
-          placeholder="Search for a country ..."
-          className={
-           classes.input
-          }
-        />
+        <div className={classes.search}>
+          <div className={classes.searchIcon}>
+            <Search />
+          </div>
+
+          <OutlinedInput
+            placeholder=" Search for a country ..."
+            className={classes.input}
+            classes={{input:classes.insideInput}}
+          />
+        </div>
       </FormControl>
       {console.log(palette)}
       <FormControl className={classes.formControl} variant="outlined">
@@ -60,9 +88,7 @@ const Form = props => {
         <NativeSelect
           variant="outlined"
           defaultValue="Filter by Region"
-          className={
-            classes.selectList
-          }
+          className={classes.selectList}
           name="Filter By Region"
           classes={{ selectMenu: classes.options }}
         >
