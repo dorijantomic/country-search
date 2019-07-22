@@ -16,17 +16,18 @@ class Layout extends Component {
         }
       >
         {console.log(this.props.palette, "theme")}
-        <div
+        <Container
           style={{
-            height: '100vh',
+            minHeight: '100vh',
+            minWidth: '100vw',
             display: "flex",
             backgroundColor: this.props.palette.palette.background.primary
           }}
         >
           <CssBaseline />
-          <Nav palette={this.props.palette}/>
-          <Form palette={this.props.palette}/>
-        </div>
+          <Nav palette={this.props.palette} />
+          <Form palette={this.props.palette} mode={this.props.mode}/>
+        </Container>
       </MuiThemeProvider>
     );
   }

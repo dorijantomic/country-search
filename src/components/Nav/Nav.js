@@ -16,8 +16,6 @@ const styles = theme => ({
   title: {
     fontWeight: "600",
     fontSize: 23,
-    // Match [md, ∞[
-    //       [960px, ∞[
     [theme.breakpoints.down("xs")]: {
       fontSize: "15px",
       fontWeight: "800"
