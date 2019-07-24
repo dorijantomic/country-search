@@ -6,9 +6,16 @@ import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline"; // CSS Baseline provides a default body backgrond color so That i can now easily change it with the button
 import Container from "@material-ui/core/Container";
 import { connect } from "react-redux";
-import { mapStateToProps } from "../../store/mapStateToProps";
+import { mapThemeToProps } from "../../store/mapThemeToProps";
+import * as actionCreators from "../../store/actions/index";
+import countriesReducer from "../../store/reducers/fetchCountriesReducer";
 
 class Layout extends Component {
+
+  componentDidMount() {
+    return this.props.onMount()
+  }
+
   render() {
     return (
       <MuiThemeProvider
@@ -30,11 +37,25 @@ class Layout extends Component {
           <CssBaseline />
           <Nav palette={this.props.palette} />
           <Form palette={this.props.palette} mode={this.props.mode}/>
-          <Cards palette={this.props.palette} mode={this.props.mode}/>
+          <Cards palette={this.props.palette} mode={this.props.mode} data={this.props.data}/>
         </Container>
       </MuiThemeProvider>
     );
   }
 }
 
-export default connect(mapStateToProps)(Layout);
+const mapStateToProps = state => {
+  return {
+    data: state.countries.data,
+    palette: state.theme.currentPalette,
+    mode: state.theme.lightMode
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onMount: () => dispatch(actionCreators.fetchBegin())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Layout);

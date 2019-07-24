@@ -8,9 +8,9 @@ import {
 } from "@material-ui/core";
 import Brightness from "@material-ui/icons/Brightness2Outlined";
 import { connect } from "react-redux";
-import * as actionTypes from "../../store/actions/themeSwitchAction";
+import * as actionTypes from "../../store/actions/actionTypes";
 import { sizeHeight } from "@material-ui/system";
-import { mapStateToProps } from "../../store/mapStateToProps";
+import { mapThemeToProps } from "../../store/mapThemeToProps";
 
 const styles = theme => ({
   title: {
@@ -77,6 +77,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  mapStateToProps,
+  mapThemeToProps,
   mapDispatchToProps
 )(withStyles(styles)(Nav));

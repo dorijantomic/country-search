@@ -1,4 +1,4 @@
-import * as actionTypes from "../actions/themeSwitchAction";
+import * as actionTypes from "../actions/actionTypes";
 const initialState = {
   currentPalette: {
     palette: {

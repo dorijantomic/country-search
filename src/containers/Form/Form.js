@@ -7,7 +7,7 @@ import {
 } from "@material-ui/core";
 import Search from "@material-ui/icons/Search";
 import { connect } from "react-redux";
-import { mapStateToProps } from "../../store/mapStateToProps";
+import { mapThemeToProps } from "../../store/mapThemeToProps";
 import { withStyles } from "@material-ui/core/styles";
 const options = ["Africa", "Americas", "Asia", "Europe", "Oceania"];
 const styles = theme => ({
@@ -57,7 +57,7 @@ const styles = theme => ({
   input: {
     boxShadow:
       "0px 1px 3px 0px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 2px 1px -1px rgba(0,0,0,0.12)",
-    backgroundColor: mapStateToProps.mode
+    backgroundColor: mapThemeToProps.mode
       ? theme.palette.primary.inputs
       : theme.palette.primary.main,
     color: theme.palette.primary.contrastText,
@@ -67,7 +67,7 @@ const styles = theme => ({
     boxShadow:
       "0px 1px 3px 0px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 2px 1px -1px rgba(0,0,0,0.12)",
     maxWidth: "320px",
-    backgroundColor: mapStateToProps.mode
+    backgroundColor: mapThemeToProps.mode
       ? theme.palette.primary.inputs
       : theme.palette.primary.main,
     color: theme.palette.primary.contrastText
