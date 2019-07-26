@@ -9,8 +9,8 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import * as actionCreators from "../../store/actions/index";
 import { connect } from "react-redux";
-
-
+import CircularProgress from "@material-ui/core/CircularProgress";
+import LinearProgress from "@material-ui/core/LinearProgress";
 const styles = theme => ({
   card: {
     maxWidth: 345,
@@ -28,65 +28,63 @@ const styles = theme => ({
 });
 const Cards = props => {
   const { classes } = props;
-  console.log(props, 'cards')
+
+  console.log(props.data, "cards");
   return (
     <div className={classes.cardsContainer}>
-      { props.data.countries ? 
-
-      props.data.countries.map((country ,i) => {
-       return <Card className={classes.card} classes={{ root: classes.paper }}>
-       <CardActionArea>
-         <CardMedia
-           component="img"
-           alt="Contemplative Reptile"
-           height="140"
-           image="/static/images/cards/contemplative-reptile.jpg"
-           title="Contemplative Reptile"
-         />
-         <CardContent>
-           <Typography
-             gutterBottom
-             variant="h5"
-             component="h2"
-             color="textPrimary"
-           >
-             Lizard
-           </Typography>
-           <Typography
-             variant="body2"
-             color="textSecondary"
-             component="p"
-             color="textPrimary"
-           >
-             Lizards are a widespread group of squamate reptiles, with over
-             6,000 species, ranging across all continents except Antarctica
-           </Typography>
-         </CardContent>
-       </CardActionArea>
-       <CardActions>
-         <Button size="small" color="textPrimary" onClick = {() => props.onClick()}>
-           Share
-         </Button>
-         <Button size="small" color="default">
-           Learn More
-         </Button>
-       </CardActions>
-     </Card>  
-      })
-     
-       
-    : null} 
-     
-     
+      {props.loading === false && props.data !== null ? (
+        props.data.map((country, i) => {
+          return (
+            <Card
+              className={classes.card}
+              classes={{ root: classes.paper }}
+              key={country.name}
+            >
+              <CardActionArea>
+                <CardMedia
+                  component="img"
+                  alt={country.name}
+                  height="140"
+                  image={country.flag}
+                  title={country.name}
+                />
+                <CardContent>
+                  <Typography
+                    gutterBottom
+                    variant="h5"
+                    component="h2"
+                    color="textPrimary"
+                  >
+                    {country.name}
+                  </Typography>
+                  <Typography variant="body2" component="p">
+                    Lizards are a widespread group of squamate reptiles, with
+                    over 6,000 species, ranging across all continents except
+                    Antarctica
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+              <CardActions>
+                <Button size="small" onClick={() => props.onClick()}>
+                  Share
+                </Button>
+                <Button size="small" color="default">
+                  Learn More
+                </Button>
+              </CardActions>
+            </Card>
+          );
+        })
+      ) : (
+        <h1>Loading ...</h1>
+      )}
     </div>
   );
 };
 
 const mapStateToProps = state => {
-  return {
-    data: state.countries
-  }
-}
+  return {};
+};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -94,4 +92,9 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Cards));
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Cards)
+);

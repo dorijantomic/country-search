@@ -13,7 +13,7 @@ const countriesReducer = (state = initialState, action) => {
                 countries: action.data
             }
         } default: {
-            return initialState
+            return state
         }
     }
 

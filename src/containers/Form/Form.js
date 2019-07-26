@@ -79,7 +79,6 @@ const styles = theme => ({
     width: "100%"
   },
   searchIcon: {
-  
     width: theme.spacing(9),
     height: "77%",
     position: "absolute",
@@ -135,6 +134,7 @@ const Form = props => {
           {options.map(option => {
             return (
               <option
+                key={option}
                 style={{ backgroundColor: palette.primary.main }}
                 classes={classes.options}
               >
