@@ -29,15 +29,12 @@ class Layout extends Component {
   }
 
   render() {
-    console.log(this.state, "render of layout");
-
     return (
       <MuiThemeProvider theme={createMuiTheme(this.props.palette)}>
-        {console.log(this.props.palette, "theme")}
         <Container
           style={{
             minHeight: "100vh",
-            minWidth: "100vw",
+            minWidth: "100%",
             display: "flex",
             flexWrap: "wrap",
             justifyContent: "center",

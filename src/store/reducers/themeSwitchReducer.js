@@ -37,24 +37,25 @@ const themeReducer = (state = initialState, action) => {
           ...state,
           lightMode: false,
           currentPalette: {
+            ...state.currentPalette,
             palette: {
+              ...state.palette,
               primary: {
-                light: "#a4a4a4",
+                ...state.primary,
                 main: `hsl(209, 23%, 22%)`,
-                dark: "#494949",
                 contrastText: `hsl(0, 0%, 100%)`
               },
               secondary: {
-                light: "#819ca9",
-                main: "#546e7a",
-                dark: "#29434e",
+                ...state.secondary,
+                main: '#fff',
                 contrastText: "#fff"
               },
               background: {
+                ...state.background,
                 primary: "hsl(207, 26%, 17%)"
               },
-
               text: {
+                ...state.text,
                 primary: `hsl(0, 0%, 100%)`
               }
             }
@@ -65,24 +66,26 @@ const themeReducer = (state = initialState, action) => {
           ...state,
           lightMode: true,
           currentPalette: {
+            ...state.currentPalette,
             palette: {
+              ...state.palette,
               primary: {
-                light: "#a4a4a4",
+                ...state.primary,
                 main: `hsl(0, 0%, 100%)`,
-                dark: "#494949",
                 contrastText: `hsl(200, 15%, 8%)`,
                 inputs: "hsl(0, 0%, 52%)"
               },
               secondary: {
-                light: "#819ca9",
-                main: "#546e7a",
-                dark: "#29434e",
+                ...state.secondary,
+                main: '#fff',
                 contrastText: "#fff"
               },
               background: {
+                ...state.background,
                 primary: "hsl(0, 0%, 98%)"
               },
               text: {
+                ...state.text,
                 primary: `hsl(200, 15%, 8%)`,
               }
             }

@@ -29,7 +29,8 @@ const styles = theme => ({
       flexFlow: "row",
       width: "100%",
       justifyContent: "space-between"
-    }
+    },
+    paddingBottom: '20px'
   },
 
   formControl: {
@@ -95,6 +96,7 @@ const styles = theme => ({
   }
 });
 const Form = props => {
+
   const { classes } = props;
   const { palette } = props.palette;
   return (
@@ -112,7 +114,7 @@ const Form = props => {
           />
         </div>
       </FormControl>
-      {console.log(palette)}
+ 
       <FormControl variant="outlined" className={classes.formControl}>
         <InputLabel className={classes.inputLabel}>Filter By Region</InputLabel>
         <Select
