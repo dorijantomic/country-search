@@ -26,16 +26,15 @@ const styles = theme => ({
     [theme.breakpoints.up("1500")]: {
       maxWidth: 345
     },
-    maxWidth: 345,
+    
 
     maxHeight: "100%"
   },
 
   cardsContainer: {
-    display: "flex",
-    maxWidth: "100%",
-    flexFlow: "row wrap",
-    justifyContent: "center"
+   
+    width: "100vw",
+  
   },
   paper: {
     margin: "0 auto",
@@ -57,11 +56,14 @@ const Cards = props => {
     <div className={classes.cardsContainer}>
       <Grid
         container
+        direction="row"
+        justify="center"
+        alignItems="center"
         xs={12}
         className={classes.gridContainer}
         color="primary"
-      />
-
+      >
+    
       {props.loading === false && props.data !== null ? (
         props.data.map((country, i) => {
           return (
@@ -110,12 +112,16 @@ const Cards = props => {
                   </Button>
                 </CardActions>
               </Card>
+              
             </Grid>
+            
+           
           );
         })
       ) : (
         <h1>Loading ...</h1>
       )}
+      </Grid>
     </div>
   );
 };

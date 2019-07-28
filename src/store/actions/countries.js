@@ -38,7 +38,7 @@ export const fetchSpecficCountry = e => {
 export const fetchRegion = e => {
     return dispatch => {
         dispatch(fetchBegin())
-        fetch(`https://restcountries.eu/rest/v2/name/${e}`)
+        fetch(`https://restcountries.eu/rest/v2/region/${e}`)
         .then(res => res.json())
         .then(res => {
             dispatch(fetchSuccess(res))

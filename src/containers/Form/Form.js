@@ -108,7 +108,17 @@ const Form = props => {
       }, 500  )
     
     }
- 
+  }
+
+  const handleRegionChange = (e) => {
+    const target = e.target.value;
+    
+  if(target === '' || target === 'undefined') {
+      return null
+    } else {
+        props.fetchRegion(target)
+    }
+  
   }
   const { classes } = props;
   const { palette } = props.palette;
@@ -132,6 +142,7 @@ const Form = props => {
       <FormControl variant="outlined" className={classes.formControl}>
         <InputLabel className={classes.inputLabel}>Filter By Region</InputLabel>
         <Select
+          onChange={handleRegionChange}
           native
           className={classes.selectList}
           classes={{ root: classes.options }}
@@ -150,6 +161,7 @@ const Form = props => {
           {options.map(option => {
             return (
               <option
+                
                 key={option}
                 style={{ backgroundColor: palette.primary.main }}
                 classes={classes.options}
@@ -173,7 +185,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchSpecificCountry: (e) => dispatch(actionCreators.fetchSpecficCountry(e)),
-    fetchCountries: () => dispatch(actionCreators.fetchAllCountries())
+    fetchCountries: () => dispatch(actionCreators.fetchAllCountries()),
+    fetchRegion: (e) => dispatch(actionCreators.fetchRegion(e))
   };
 };
 
