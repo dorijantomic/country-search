@@ -7,6 +7,7 @@ import {
 } from "@material-ui/core";
 import Search from "@material-ui/icons/Search";
 import { connect } from "react-redux";
+import * as actionCreators from '../../store/actions/index'
 import { mapThemeToProps } from "../../store/mapThemeToProps";
 import { withStyles } from "@material-ui/core/styles";
 const options = ["Africa", "Americas", "Asia", "Europe", "Oceania"];
@@ -97,6 +98,18 @@ const styles = theme => ({
 });
 const Form = props => {
 
+  const handleChange = (e) => {
+    const target = e.target.value
+    if(target === '' || target === 'undefined') {
+      return props.fetchCountries()
+    } else {
+      setTimeout((e) => {
+        props.fetchSpecificCountry(target)
+      }, 500  )
+    
+    }
+ 
+  }
   const { classes } = props;
   const { palette } = props.palette;
   return (
@@ -108,6 +121,7 @@ const Form = props => {
           </div>
 
           <OutlinedInput
+            onChange={(e) => handleChange(e)}
             placeholder=" Search for a country ..."
             className={classes.input}
             classes={{ input: classes.insideInput }}
@@ -149,5 +163,18 @@ const Form = props => {
     </form>
   );
 };
+const mapStateToProps = state => {
+  return {
+    palette: state.theme.currentPalette,
+    mode: state.theme.lightMode
+  };
+};
 
-export default withStyles(styles)(Form);
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchSpecificCountry: (e) => dispatch(actionCreators.fetchSpecficCountry(e)),
+    fetchCountries: () => dispatch(actionCreators.fetchAllCountries())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Form));

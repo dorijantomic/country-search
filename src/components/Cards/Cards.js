@@ -49,6 +49,7 @@ const styles = theme => ({
   }
 });
 const Cards = props => {
+  console.log(props)
   const { classes } = props;
 
   const { palette } = props;
@@ -125,7 +126,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onClick: () => dispatch(actionCreators.fetchBegin())
+    onClick: () => dispatch(actionCreators.fetchAllCountries())
   };
 };
 

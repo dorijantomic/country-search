@@ -1,4 +1,6 @@
 export {
-    fetchBegin,
-    fetchSuccess
-} from './countries'
+  fetchAllCountries,
+  fetchSpecficCountry,
+  fetchRegion,
+  fetchSuccess
+} from "./countries";

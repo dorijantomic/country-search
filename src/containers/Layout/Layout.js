@@ -6,28 +6,14 @@ import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline"; // CSS Baseline provides a default body backgrond color so That i can now easily change it with the button
 import Container from "@material-ui/core/Container";
 import { connect } from "react-redux";
-import { mapThemeToProps } from "../../store/mapThemeToProps";
+
 import * as actionCreators from "../../store/actions/index";
-import countriesReducer from "../../store/reducers/fetchCountriesReducer";
 
 class Layout extends Component {
-  state = {
-    data: null,
-    loading: false
-  };
-  componentDidMount() {
-    this.setState({ loading: true });
-    fetch("https://restcountries.eu/rest/v2/all")
-      .then(res => res.json())
-      .then(res => {
-        this.setState({
-          data: res,
-          loading: false
-        });
-      })
-      .catch(err => err);
-  }
 
+  componentDidMount() {
+    this.props.onMount()
+  }
   render() {
     return (
       <MuiThemeProvider theme={createMuiTheme(this.props.palette)}>
@@ -45,10 +31,11 @@ class Layout extends Component {
           <Nav palette={this.props.palette} />
           <Form palette={this.props.palette} mode={this.props.mode} />
           <Cards
+            data={this.props.data}
             palette={this.props.palette}
             mode={this.props.mode}
-            data={this.state.data}
-            loading={this.state.loading}
+           
+            loading={this.props.loading}
           />
         </Container>
       </MuiThemeProvider>
@@ -59,13 +46,15 @@ class Layout extends Component {
 const mapStateToProps = state => {
   return {
     palette: state.theme.currentPalette,
-    mode: state.theme.lightMode
+    mode: state.theme.lightMode,
+    data: state.countries.reduxData,
+    loading: state.countries.loading
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onMount: () => dispatch(actionCreators.fetchBegin())
+    onMount: () => dispatch(actionCreators.fetchAllCountries())
   };
 };
 
