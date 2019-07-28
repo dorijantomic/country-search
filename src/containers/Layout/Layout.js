@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import Nav from "../../components/Nav/Nav";
 import Form from "../Form/Form";
 import Cards from "../../components/Cards/Cards";
+import Snackbar from "../../components/Snackbar/Snackbar";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline"; // CSS Baseline provides a default body backgrond color so That i can now easily change it with the button
 import Container from "@material-ui/core/Container";
@@ -10,9 +11,8 @@ import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions/index";
 
 class Layout extends Component {
-
   componentDidMount() {
-    this.props.onMount()
+    this.props.onMount();
   }
   render() {
     return (
@@ -30,13 +30,16 @@ class Layout extends Component {
           <CssBaseline />
           <Nav palette={this.props.palette} />
           <Form palette={this.props.palette} mode={this.props.mode} />
-          <Cards
-            data={this.props.data}
-            palette={this.props.palette}
-            mode={this.props.mode}
-           
-            loading={this.props.loading}
-          />
+          {this.props.data!== null && this.props.data.status && !this.props.loading ? (
+            <Snackbar />
+          ) : (
+            <Cards
+              data={this.props.data}
+              palette={this.props.palette}
+              mode={this.props.mode}
+              loading={this.props.loading}
+            />
+          )}
         </Container>
       </MuiThemeProvider>
     );

@@ -9,8 +9,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import * as actionCreators from "../../store/actions/index";
 import { connect } from "react-redux";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import LinearProgress from "@material-ui/core/LinearProgress";
+
 import Grid from "@material-ui/core/Grid";
 const styles = theme => ({
   card: {
