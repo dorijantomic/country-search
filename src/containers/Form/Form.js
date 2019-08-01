@@ -98,16 +98,21 @@ const styles = theme => ({
 });
 const Form = props => {
 
+  console.log('props', props)
   const handleChange = (e) => {
-    const target = e.target.value
-    if(target === '' || target === 'undefined') {
-      return props.fetchCountries()
-    } else {
-      setTimeout((e) => {
-        props.fetchSpecificCountry(target)
-      }, 500  )
-    
-    }
+
+    let target = e.target.value
+    console.log(target, 'target')
+   /* props.data.filter(e => {
+      if(target === e.name) {
+        return console.log(target)
+      }
+    })
+  
+  
+     */
+      props.fetchSpecificCountry(target)
+
   }
 
   const handleRegionChange = (e) => {
@@ -131,6 +136,7 @@ const Form = props => {
           </div>
 
           <OutlinedInput
+          
             onChange={(e) => handleChange(e)}
             placeholder=" Search for a country ..."
             className={classes.input}
@@ -185,7 +191,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchSpecificCountry: (e) => dispatch(actionCreators.fetchSpecficCountry(e)),
-    fetchCountries: () => dispatch(actionCreators.fetchAllCountries()),
+    fetchCountries: (data) => dispatch(actionCreators.fetchAllCountries(data)),
     fetchRegion: (e) => dispatch(actionCreators.fetchRegion(e))
   };
 };

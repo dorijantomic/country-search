@@ -31,9 +31,10 @@ const Snack = (props) => {
         action={[
           <Button
             key="undo"
-            color="secondary"
+            style={{color:'#61cdff'}}
             size="small"
            onClick={handleClick}
+           
           >
             UNDO
           </Button>,

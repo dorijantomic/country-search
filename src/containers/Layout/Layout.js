@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import Nav from "../../components/Nav/Nav";
 import Form from "../Form/Form";
-import Cards from "../../components/Cards/Cards";
+import CardsList from "../../components/CardList/CardsList";
 import Snackbar from "../../components/Snackbar/Snackbar";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline"; // CSS Baseline provides a default body backgrond color so That i can now easily change it with the button
@@ -29,11 +29,12 @@ class Layout extends Component {
         >
           <CssBaseline />
           <Nav palette={this.props.palette} />
-          <Form palette={this.props.palette} mode={this.props.mode} />
+          <Form palette={this.props.palette} mode={this.props.mode}  data={this.props.data}/>
           {this.props.data!== null && this.props.data.status && !this.props.loading ? (
             <Snackbar />
           ) : (
-            <Cards
+            <CardsList
+              name={this.props.name}
               data={this.props.data}
               palette={this.props.palette}
               mode={this.props.mode}
@@ -51,7 +52,8 @@ const mapStateToProps = state => {
     palette: state.theme.currentPalette,
     mode: state.theme.lightMode,
     data: state.countries.reduxData,
-    loading: state.countries.loading
+    loading: state.countries.loading,
+    name: state.countries.name
   };
 };
 

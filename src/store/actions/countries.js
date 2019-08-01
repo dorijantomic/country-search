@@ -6,6 +6,14 @@ export const fetchBegin = () => {
     }
 }
 
+export const countryName = (name) => {
+    return {
+        type: actionTypes.COUNTRY_NAME,
+        name: name
+    }
+  
+}
+
 export const fetchSuccess = ( res ) => {
     return {
         type: actionTypes.FETCH_SUCCESS,
@@ -19,6 +27,7 @@ export const fetchAllCountries = (e) => {
         fetch(`https://restcountries.eu/rest/v2/all`)
         .then(res => res.json())
         .then(res => {
+           
             dispatch(fetchSuccess(res))
         })
     }
@@ -26,12 +35,7 @@ export const fetchAllCountries = (e) => {
 
 export const fetchSpecficCountry = e => {
     return dispatch => {
-        dispatch(fetchBegin())
-        fetch(`https://restcountries.eu/rest/v2/name/${e}`)
-        .then(res => res.json())
-        .then(res => {
-            dispatch(fetchSuccess(res))
-        })
+       dispatch(countryName(e))
     }
 }
 
