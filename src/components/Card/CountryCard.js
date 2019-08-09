@@ -1,4 +1,6 @@
 import React from "react";
+import NumberFormat from 'react-number-format';
+import {Link} from 'react-router-dom'
 import {
   Grid,
   Typography,
@@ -40,14 +42,34 @@ const styles = theme => ({
 });
 const CountryCard = (props) => {
     const {classes} = props
+ 
   return (
+   
     <Grid item xs={12} sm={12} md={4} lg={3} className={classes.gridItem}>
+      
       <Card
         style={{ backgroundColor: props.palette.palette.primary.main }}
         className={classes.card}
         classes={{ root: classes.paper }}
         key={props.country.name}
       >
+         <Link to={{
+           pathname: `/${props.country.name}`,
+           state: {
+             name: props.country.name,
+             nativeName: props.country.nativeName,
+             flag: props.country.flag,
+             population: props.country.population,
+             region: props.country.region,
+             subRegion: props.country.subregion,
+             capital: props.country.capital,
+             topLevelDomain: props.country.topLevelDomain,
+             currencies: props.country.currencies,
+             languages: props.country.languages,
+             borderCountries: props.country.borders
+
+           }
+         }}>
         <CardActionArea>
           <CardMedia
             component="img"
@@ -66,11 +88,17 @@ const CountryCard = (props) => {
               {props.country.name}
             </Typography>
             <Typography variant="body2" component="p">
-              Lizards are a widespread group of squamate reptiles, with over
-              6,000 species, ranging across all continents except Antarctica
+              <strong>Population:</strong> <NumberFormat value={props.country.population} displayType={'text'} thousandSeparator={true}/> 
+            </Typography>
+            <Typography variant="body2" component="p">
+              <strong>Region:</strong> {props.country.region}
+            </Typography>
+            <Typography variant="body2" component="p">
+              <strong>Capital:</strong> {props.country.capital}
             </Typography>
           </CardContent>
         </CardActionArea>
+        </Link>
         <CardActions>
           <Button size="small">Share</Button>
           <Button size="small" color="default">
