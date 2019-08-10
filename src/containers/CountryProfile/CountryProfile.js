@@ -22,8 +22,8 @@ class CountryProfile extends Component {
   };
 
   handleClick = () => {
-    console.log(this.props)
-    console.log(this.props.history.location.pathname)
+    console.log(this.props, 'this is inside of handleClick logging all props')
+    console.log(this.props.history.location.pathname, 'this is also inside of handleClick logging props.history.location.pathname')
     fetch(
       `https://restcountries.eu/rest/v2/alpha?codes=${this.props.history.location.pathname.substring(
         1
@@ -115,7 +115,7 @@ class CountryProfile extends Component {
                       <strong>Border Countries:</strong>
                     </Typography>
                     {country.borders.map((country, i) => (
-                      <Link to={`/${country}`} replace onClick={this.handleClick}>
+                      <Link to={`/${country}`}  onClick={this.handleClick}>
                         <Button key={i}>{country}</Button>
                       </Link>
                     ))}
