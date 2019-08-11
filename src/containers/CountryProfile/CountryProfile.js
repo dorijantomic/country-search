@@ -37,21 +37,35 @@ class CountryProfile extends Component {
     });
   };
   componentDidMount() {
-    fetch(
-      `https://restcountries.eu/rest/v2/name/${this.props.location.pathname.substring(
-        1
-      )}?fullText=true`
-    )
-      .then(res => {
-        let a = res.json();
-        console.log(a);
-        return a;
-      })
-      .then(res => {
-        this.setState({
-          country: res
+    if (this.props.location.length > 3) {
+      fetch(
+        `https://restcountries.eu/rest/v2/name/${this.props.location.pathname.substring(
+          1
+        )}?fullText=true`
+      )
+        .then(res => {
+          let a = res.json();
+          console.log(a);
+          return a;
+        })
+        .then(res => {
+          this.setState({
+            country: res
+          });
         });
-      });
+    } else {
+      fetch(
+        `https://restcountries.eu/rest/v2/alpha?codes=${this.props.history.location.pathname.substring(
+          1
+        )}`
+      )
+        .then(res => res.json())
+        .then(res => {
+          this.setState({
+            country: res
+          });
+        });
+    }
   }
   render() {
     console.log(this.state.country, "state");
