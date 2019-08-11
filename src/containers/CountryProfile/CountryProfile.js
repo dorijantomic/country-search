@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core";
 import * as actionCreators from "../../store/actions/index";
 import { connect } from "react-redux";
 import NumberFormat from "react-number-format";
-import humanizeList from 'humanize-list'
+import humanizeList from "humanize-list";
 import { Link } from "react-router-dom";
 
 import {
@@ -21,21 +21,21 @@ class CountryProfile extends Component {
     country: null
   };
 
-  handleClick = () => {
-    console.log(this.props, 'this is inside of handleClick logging all props')
-    console.log(this.props.history.location.pathname, 'this is also inside of handleClick logging props.history.location.pathname')
-    fetch(
-      `https://restcountries.eu/rest/v2/alpha?codes=${this.props.history.location.pathname.substring(
-        1
-      )}`
-    )
-      .then(res => res.json())
-      .then(res => {
-        this.setState({
-          country: res
+  handleClick = e => {
+    this.props.history.listen((location, action) => {
+      fetch(
+        `https://restcountries.eu/rest/v2/alpha?codes=${this.props.history.location.pathname.substring(
+          1
+        )}`
+      )
+        .then(res => res.json())
+        .then(res => {
+          this.setState({
+            country: res
+          });
         });
-      });
-  }
+    });
+  };
   componentDidMount() {
     fetch(
       `https://restcountries.eu/rest/v2/name/${this.props.location.pathname.substring(
@@ -43,9 +43,9 @@ class CountryProfile extends Component {
       )}?fullText=true`
     )
       .then(res => {
-      let a = res.json()
-      console.log(a)
-      return a
+        let a = res.json();
+        console.log(a);
+        return a;
       })
       .then(res => {
         this.setState({
@@ -101,25 +101,32 @@ class CountryProfile extends Component {
                   </CardContent>
                   <CardContent>
                     <Typography variant="body2" component="p">
-                      <strong>Top Level Domain:</strong> {country.topLevelDomain}
+                      <strong>Top Level Domain:</strong>{" "}
+                      {country.topLevelDomain}
                     </Typography>
                     <Typography variant="body2" component="p">
-                      <strong>Currencies:</strong> {country.currencies.map(currency => currency.name)}
+                      <strong>Currencies:</strong>{" "}
+                      {country.currencies.map(currency => currency.name)}
                     </Typography>
                     <Typography variant="body2" component="p">
-                      <strong>Languages:</strong> {humanizeList(country.languages.map(language => language.name))}
+                      <strong>Languages:</strong>{" "}
+                      {humanizeList(
+                        country.languages.map(language => language.name)
+                      )}
                     </Typography>
                   </CardContent>
                   <CardActions>
-                  <Typography variant="body2" component="p">
+                    <Typography variant="body2" component="p">
                       <strong>Border Countries:</strong>
                     </Typography>
                     {country.borders.map((country, i) => (
-                      <Link to={`/${country}`}  onClick={this.handleClick}>
+                      <Link
+                        to={`/${country}`}
+                        onClick={e => this.handleClick(e)}
+                      >
                         <Button key={i}>{country}</Button>
                       </Link>
                     ))}
-                    
                   </CardActions>
                 </CardActionArea>
               </Card>
