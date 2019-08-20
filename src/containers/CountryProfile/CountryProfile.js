@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import NumberFormat from "react-number-format";
 import humanizeList from "humanize-list";
 import { Link } from "react-router-dom";
+import Navigation from '../../components/Nav/Nav'
+import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 
 import {
   Card,
@@ -22,6 +24,7 @@ class CountryProfile extends Component {
   };
 
   handleClick = e => {
+debugger
     this.props.history.listen((location, action) => {
       fetch(
         `https://restcountries.eu/rest/v2/alpha?codes=${this.props.history.location.pathname.substring(
@@ -37,7 +40,8 @@ class CountryProfile extends Component {
     });
   };
   componentDidMount() {
-    if (this.props.location.length > 3) {
+debugger
+    if (this.props.location.pathname.length > 4) {
       fetch(
         `https://restcountries.eu/rest/v2/name/${this.props.location.pathname.substring(
           1
@@ -72,6 +76,8 @@ class CountryProfile extends Component {
 
     return (
       <div style={{}}>
+         <MuiThemeProvider theme={createMuiTheme(this.props.palette)}>
+        <Navigation palette={this.props.palette}/>
         {this.state.country !== null
           ? this.state.country.map(country => (
               <Card style={{ width: "100%", height: "100vh" }}>
@@ -146,6 +152,7 @@ class CountryProfile extends Component {
               </Card>
             ))
           : null}
+          </MuiThemeProvider>
       </div>
     );
   }
@@ -168,4 +175,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles()(CountryProfile));
+)(CountryProfile);
