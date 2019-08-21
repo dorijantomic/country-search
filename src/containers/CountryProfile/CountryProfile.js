@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import NumberFormat from "react-number-format";
 import humanizeList from "humanize-list";
 import { Link } from "react-router-dom";
-import Navigation from '../../components/Nav/Nav'
+import Navigation from "../../components/Nav/Nav";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 
 import {
@@ -14,9 +14,65 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  IconButton,
   Button,
+  Box,
   Typography
 } from "@material-ui/core";
+
+import ArrowBack from "@material-ui/icons/ArrowBack";
+const styles = theme => ({
+  container: {
+    paddingTop: 80,
+    [theme.breakpoints.down("xs")]: {
+      paddingTop: 120
+    }
+  },
+  box: {
+    width: 100,
+    marginBottom: 30,
+    marginLeft: 20,
+    height: 40,
+    position: "relative",
+
+    "&:hover": {
+      backgroundColor: theme.palette.action.hover + "!Important"
+    }
+  },
+
+  label: {
+    position: "relative",
+    bottom: "5px"
+  },
+  link: {
+    textDecoration: 'none'
+  },
+  root: {
+    "&:hover": {
+      backgroundColor: "transparent"
+    }
+  },
+
+  button: {
+    marginTop: '10px'
+  },
+
+  CardActions: {
+    display: 'flex',
+    flexFlow: 'row wrap',
+    justifyContent: 'flex-start'
+  },
+  flag: {
+    maxWidth: '90%',
+    height: 'auto',
+    margin: '0 auto',
+    [theme.breakpoints.up("md")]: {
+      maxWidth: 360,
+      maxHeight: 240
+    }
+   
+  }
+});
 
 class CountryProfile extends Component {
   state = {
@@ -24,7 +80,7 @@ class CountryProfile extends Component {
   };
 
   handleClick = e => {
-debugger
+    //debugger
     this.props.history.listen((location, action) => {
       fetch(
         `https://restcountries.eu/rest/v2/alpha?codes=${this.props.history.location.pathname.substring(
@@ -40,7 +96,7 @@ debugger
     });
   };
   componentDidMount() {
-debugger
+    //debugger
     if (this.props.location.pathname.length > 4) {
       fetch(
         `https://restcountries.eu/rest/v2/name/${this.props.location.pathname.substring(
@@ -73,86 +129,128 @@ debugger
   }
   render() {
     console.log(this.state.country, "state");
-
+    const { classes } = this.props;
     return (
       <div style={{}}>
-         <MuiThemeProvider theme={createMuiTheme(this.props.palette)}>
-        <Navigation palette={this.props.palette}/>
-        {this.state.country !== null
-          ? this.state.country.map(country => (
-              <Card style={{ width: "100%", height: "100vh" }}>
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    alt={country.name}
-                    height="140"
-                    image={country.flag}
-                    title={country.name}
-                  />
-                  <CardContent>
-                    <Typography
-                      gutterBottom
-                      variant="h5"
-                      component="h2"
-                      color="textPrimary"
-                    >
-                      {country.name}
-                    </Typography>
-                    <Typography variant="body2" component="p">
-                      <strong>Native Name:</strong> {country.nativeName}
-                    </Typography>
-                    <Typography variant="body2" component="p">
-                      <strong>Population:</strong>{" "}
-                      <NumberFormat
-                        value={country.population}
-                        displayType={"text"}
-                        thousandSeparator={true}
+        <MuiThemeProvider theme={createMuiTheme(this.props.palette)}>
+          <Navigation palette={this.props.palette} />
+          <div
+            className={classes.container}
+            style={{
+              backgroundColor: this.props.palette.palette.background.primary
+            }}
+          >
+            <Box
+              boxShadow={1}
+              className={classes.box}
+              style={{
+                backgroundColor: this.props.palette.palette.primary.main
+              }}
+            >
+              <IconButton
+                className={classes.iconButton}
+                disableRipple={true}
+                disableFocusRipple={true}
+                style={{
+                  color: this.props.palette.palette.primary.contrastText
+                }}
+                classes={{
+                  label: classes.label,
+                  root: classes.root
+                }}
+              >
+                <ArrowBack />
+                <Typography variant="subtitle1" color="textPrimary">
+                  Back
+                </Typography>
+              </IconButton>
+            </Box>
+
+            {this.state.country !== null
+              ? this.state.country.map(country => (
+            
+                  <Card
+                    style={{
+                      width: "100%",
+                      minHeight: "100vh",
+                      backgroundColor: this.props.palette.palette.background.primary
+                    }}
+                  >
+                    <CardActionArea>
+                      <CardMedia
+                        className={classes.flag}
+                        component="img"
+                        alt={country.name}
+                        height="140"
+                        image={country.flag}
+                        title={country.name}
                       />
-                    </Typography>
-                    <Typography variant="body2" component="p">
-                      <strong>Region:</strong> {country.region}
-                    </Typography>
-                    <Typography variant="body2" component="p">
-                      <strong>Sub Region:</strong> {country.subregion}
-                    </Typography>
-                    <Typography variant="body2" component="p">
-                      <strong>Capital:</strong> {country.capital}
-                    </Typography>
-                  </CardContent>
-                  <CardContent>
-                    <Typography variant="body2" component="p">
-                      <strong>Top Level Domain:</strong>{" "}
-                      {country.topLevelDomain}
-                    </Typography>
-                    <Typography variant="body2" component="p">
-                      <strong>Currencies:</strong>{" "}
-                      {country.currencies.map(currency => currency.name)}
-                    </Typography>
-                    <Typography variant="body2" component="p">
-                      <strong>Languages:</strong>{" "}
-                      {humanizeList(
-                        country.languages.map(language => language.name)
-                      )}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Typography variant="body2" component="p">
-                      <strong>Border Countries:</strong>
-                    </Typography>
-                    {country.borders.map((country, i) => (
-                      <Link
-                        to={`/${country}`}
-                        onClick={e => this.handleClick(e)}
-                      >
-                        <Button key={i}>{country}</Button>
-                      </Link>
-                    ))}
-                  </CardActions>
-                </CardActionArea>
-              </Card>
-            ))
-          : null}
-          </MuiThemeProvider>
+                      <CardContent>
+                        <Typography
+                          gutterBottom
+                          variant="h5"
+                          component="h2"
+                          color="textPrimary"
+                        >
+                          {country.name}
+                        </Typography>
+                        <Typography variant="body2" component="p">
+                          <strong>Native Name:</strong> {country.nativeName}
+                        </Typography>
+                        <Typography variant="body2" component="p">
+                          <strong>Population:</strong>{" "}
+                          <NumberFormat
+                            value={country.population}
+                            displayType={"text"}
+                            thousandSeparator={true}
+                          />
+                        </Typography>
+                        <Typography variant="body2" component="p">
+                          <strong>Region:</strong> {country.region}
+                        </Typography>
+                        <Typography variant="body2" component="p">
+                          <strong>Sub Region:</strong> {country.subregion}
+                        </Typography>
+                        <Typography variant="body2" component="p">
+                          <strong>Capital:</strong> {country.capital}
+                        </Typography>
+                      </CardContent>
+                      <CardContent>
+                        <Typography variant="body2" component="p">
+                          <strong>Top Level Domain:</strong>{" "}
+                          {country.topLevelDomain}
+                        </Typography>
+                        <Typography variant="body2" component="p">
+                          <strong>Currencies:</strong>{" "}
+                          {country.currencies.map(currency => currency.name)}
+                        </Typography>
+                        <Typography variant="body2" component="p">
+                          <strong>Languages:</strong>{" "}
+                          {humanizeList(
+                            country.languages.map(language => language.name)
+                          )}
+                        </Typography>
+                      </CardContent>
+                      <CardActions className={classes.CardActions}>
+                        <Typography variant="body2" component="p" style={{minWidth: '100vw'}} color='textPrimary'>
+                          <strong>Border Countries:</strong>
+                        </Typography>
+                        {country.borders.map((country, i) => (
+                          <Link
+                            className={classes.link}
+                            to={`/${country}`}
+                            onClick={e => this.handleClick(e)}
+                          >
+                            <Button key={i} className={classes.button} variant='contained' color='primary'>{country}</Button>
+                          </Link>
+                        ))}
+                      </CardActions>
+                    </CardActionArea>
+                  </Card>
+                ))
+              : null}
+          </div>
+        </MuiThemeProvider>
       </div>
     );
   }
@@ -175,4 +273,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CountryProfile);
+)(withStyles(styles)(CountryProfile));
