@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withStyles } from "@material-ui/core";
+import { withStyles, Hidden } from "@material-ui/core";
 import * as actionCreators from "../../store/actions/index";
 import { connect } from "react-redux";
 import NumberFormat from "react-number-format";
@@ -23,6 +23,7 @@ import {
 import ArrowBack from "@material-ui/icons/ArrowBack";
 const styles = theme => ({
   container: {
+    minHeight: "100vh",
     paddingTop: 80,
     [theme.breakpoints.down("xs")]: {
       paddingTop: 120
@@ -45,7 +46,7 @@ const styles = theme => ({
     bottom: "5px"
   },
   link: {
-    textDecoration: 'none'
+    textDecoration: "none"
   },
   root: {
     "&:hover": {
@@ -54,23 +55,57 @@ const styles = theme => ({
   },
 
   button: {
-    marginTop: '10px'
+    marginTop: "10px"
   },
 
   CardActions: {
-    display: 'flex',
-    flexFlow: 'row wrap',
-    justifyContent: 'flex-start'
+    display: "flex",
+    flexFlow: "row wrap",
+    justifyContent: "flex-start",
+
+    [theme.breakpoints.up("md")]: {
+      display: "flex",
+      flexFlow: "row wrap",
+      margin: "0 0 0 7%",
+      overflow: "hidden"
+    }
+  },
+  ActionArea: {
+    [theme.breakpoints.up("md")]: {
+      display: "flex",
+      flexFlow: "row wrap",
+      justifyContent: 'end',
+      marginLeft: '5%'
+    }
   },
   flag: {
-    maxWidth: '90%',
-    height: 'auto',
-    margin: '0 auto',
+    maxWidth: "90%",
+    height: "auto",
+    margin: "0 auto",
     [theme.breakpoints.up("md")]: {
       maxWidth: 360,
-      maxHeight: 240
+      maxHeight: 240,
+      margin: "0"
     }
-   
+  },
+  countryInfoA: {
+    [theme.breakpoints.up("md")]: {
+      display: "flex",
+      flexFlow: "row wrap",
+      justifyContent: "space-evenly",
+      maxWidth: 500
+    },
+    [theme.breakpoints.up("lg")]: {
+      display: "flex",
+      flexFlow: "row wrap",
+      justifyContent: "space-evenly",
+      maxWidth: 900
+    }
+  },
+  countryInfoB: {
+    [theme.breakpoints.up("md")]: {
+      alignSelf: "center"
+    }
   }
 });
 
@@ -168,15 +203,15 @@ class CountryProfile extends Component {
 
             {this.state.country !== null
               ? this.state.country.map(country => (
-            
                   <Card
                     style={{
                       width: "100%",
                       minHeight: "100vh",
-                      backgroundColor: this.props.palette.palette.background.primary
+                      backgroundColor: this.props.palette.palette.background
+                        .primary
                     }}
                   >
-                    <CardActionArea>
+                    <CardActionArea className={classes.ActionArea}>
                       <CardMedia
                         className={classes.flag}
                         component="img"
@@ -185,66 +220,80 @@ class CountryProfile extends Component {
                         image={country.flag}
                         title={country.name}
                       />
-                      <CardContent>
-                        <Typography
-                          gutterBottom
-                          variant="h5"
-                          component="h2"
-                          color="textPrimary"
-                        >
-                          {country.name}
-                        </Typography>
-                        <Typography variant="body2" component="p">
-                          <strong>Native Name:</strong> {country.nativeName}
-                        </Typography>
-                        <Typography variant="body2" component="p">
-                          <strong>Population:</strong>{" "}
-                          <NumberFormat
-                            value={country.population}
-                            displayType={"text"}
-                            thousandSeparator={true}
-                          />
-                        </Typography>
-                        <Typography variant="body2" component="p">
-                          <strong>Region:</strong> {country.region}
-                        </Typography>
-                        <Typography variant="body2" component="p">
-                          <strong>Sub Region:</strong> {country.subregion}
-                        </Typography>
-                        <Typography variant="body2" component="p">
-                          <strong>Capital:</strong> {country.capital}
-                        </Typography>
-                      </CardContent>
-                      <CardContent>
-                        <Typography variant="body2" component="p">
-                          <strong>Top Level Domain:</strong>{" "}
-                          {country.topLevelDomain}
-                        </Typography>
-                        <Typography variant="body2" component="p">
-                          <strong>Currencies:</strong>{" "}
-                          {country.currencies.map(currency => currency.name)}
-                        </Typography>
-                        <Typography variant="body2" component="p">
-                          <strong>Languages:</strong>{" "}
-                          {humanizeList(
-                            country.languages.map(language => language.name)
-                          )}
-                        </Typography>
-                      </CardContent>
-                      <CardActions className={classes.CardActions}>
-                        <Typography variant="body2" component="p" style={{minWidth: '100vw'}} color='textPrimary'>
-                          <strong>Border Countries:</strong>
-                        </Typography>
-                        {country.borders.map((country, i) => (
-                          <Link
-                            className={classes.link}
-                            to={`/${country}`}
-                            onClick={e => this.handleClick(e)}
+                      <div className={classes.countryInfoA}>
+                        <CardContent>
+                          <Typography
+                            gutterBottom
+                            variant="h5"
+                            component="h2"
+                            color="textPrimary"
                           >
-                            <Button key={i} className={classes.button} variant='contained' color='primary'>{country}</Button>
-                          </Link>
-                        ))}
-                      </CardActions>
+                            {country.name}
+                          </Typography>
+                          <Typography variant="body2" component="p">
+                            <strong>Native Name:</strong> {country.nativeName}
+                          </Typography>
+                          <Typography variant="body2" component="p">
+                            <strong>Population:</strong>{" "}
+                            <NumberFormat
+                              value={country.population}
+                              displayType={"text"}
+                              thousandSeparator={true}
+                            />
+                          </Typography>
+                          <Typography variant="body2" component="p">
+                            <strong>Region:</strong> {country.region}
+                          </Typography>
+                          <Typography variant="body2" component="p">
+                            <strong>Sub Region:</strong> {country.subregion}
+                          </Typography>
+                          <Typography variant="body2" component="p">
+                            <strong>Capital:</strong> {country.capital}
+                          </Typography>
+                        </CardContent>
+                        <CardContent className={classes.countryInfoB}>
+                          <Typography variant="body2" component="p">
+                            <strong>Top Level Domain:</strong>{" "}
+                            {country.topLevelDomain}
+                          </Typography>
+                          <Typography variant="body2" component="p">
+                            <strong>Currencies:</strong>{" "}
+                            {country.currencies.map(currency => currency.name)}
+                          </Typography>
+                          <Typography variant="body2" component="p">
+                            <strong>Languages:</strong>{" "}
+                            {humanizeList(
+                              country.languages.map(language => language.name)
+                            )}
+                          </Typography>
+                        </CardContent>
+                        <CardActions className={classes.CardActions}>
+                          <Typography
+                            variant="body2"
+                            component="p"
+                            style={{ minWidth: "100vw" }}
+                            color="textPrimary"
+                          >
+                            <strong>Border Countries:</strong>
+                          </Typography>
+                          {country.borders.map((country, i) => (
+                            <Link
+                              className={classes.link}
+                              to={`/${country}`}
+                              onClick={e => this.handleClick(e)}
+                            >
+                              <Button
+                                key={i}
+                                className={classes.button}
+                                variant="contained"
+                                color="primary"
+                              >
+                                {country}
+                              </Button>
+                            </Link>
+                          ))}
+                        </CardActions>
+                      </div>
                     </CardActionArea>
                   </Card>
                 ))
