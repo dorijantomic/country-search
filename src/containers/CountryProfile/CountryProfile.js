@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import NumberFormat from "react-number-format";
 import humanizeList from "humanize-list";
 import { Link } from "react-router-dom";
+
 import Navigation from "../../components/Nav/Nav";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 
@@ -110,6 +111,7 @@ const styles = theme => ({
 });
 
 class CountryProfile extends Component {
+ 
   state = {
     country: null
   };
@@ -117,6 +119,25 @@ class CountryProfile extends Component {
   handleClick = e => {
     //debugger
     this.props.history.listen((location, action) => {
+      if(this.props.location.pathname.length > 4) {
+        fetch(
+          `https://restcountries.eu/rest/v2/name/${this.props.location.pathname.substring(
+            1
+          )}?fullText=true`
+        )
+          .then(res => {
+            let a = res.json();
+            console.log(a);
+            return a;
+          })
+          .then(res => {
+            this.setState({
+              country: res
+            });
+          });
+      } else {
+
+      
       fetch(
         `https://restcountries.eu/rest/v2/alpha?codes=${this.props.history.location.pathname.substring(
           1
@@ -128,10 +149,11 @@ class CountryProfile extends Component {
             country: res
           });
         });
+      }
     });
   };
   componentDidMount() {
-    //debugger
+    debugger
     if (this.props.location.pathname.length > 4) {
       fetch(
         `https://restcountries.eu/rest/v2/name/${this.props.location.pathname.substring(
@@ -163,6 +185,7 @@ class CountryProfile extends Component {
     }
   }
   render() {
+    console.log(this.props, 'props inside of cp')
     console.log(this.state.country, "state");
     const { classes } = this.props;
     return (
@@ -183,6 +206,7 @@ class CountryProfile extends Component {
               }}
             >
               <IconButton
+                onClick={() =>this.props.history.go(-1)}
                 className={classes.iconButton}
                 disableRipple={true}
                 disableFocusRipple={true}
