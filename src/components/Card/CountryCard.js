@@ -53,7 +53,7 @@ const CountryCard = props => {
         <Link
           style={{
             textDecoration: "none",
-            color: 'inherit'
+            color: "inherit"
           }}
           to={{
             pathname: `/${props.country.name}`,
@@ -106,7 +106,6 @@ const CountryCard = props => {
             </CardContent>
           </CardActionArea>
         </Link>
-       
       </Card>
     </Grid>
   );

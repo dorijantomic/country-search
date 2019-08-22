@@ -75,8 +75,8 @@ const styles = theme => ({
     [theme.breakpoints.up("md")]: {
       display: "flex",
       flexFlow: "row wrap",
-      justifyContent: 'end',
-      marginLeft: '5%'
+      justifyContent: "end",
+      marginLeft: "5%"
     }
   },
   flag: {
@@ -111,15 +111,13 @@ const styles = theme => ({
 });
 
 class CountryProfile extends Component {
- 
   state = {
     country: null
   };
 
   handleClick = e => {
-    //debugger
     this.props.history.listen((location, action) => {
-      if(this.props.location.pathname.length > 4) {
+      if (this.props.location.pathname.length > 4) {
         fetch(
           `https://restcountries.eu/rest/v2/name/${this.props.location.pathname.substring(
             1
@@ -127,7 +125,7 @@ class CountryProfile extends Component {
         )
           .then(res => {
             let a = res.json();
-            console.log(a);
+
             return a;
           })
           .then(res => {
@@ -136,24 +134,21 @@ class CountryProfile extends Component {
             });
           });
       } else {
-
-      
-      fetch(
-        `https://restcountries.eu/rest/v2/alpha?codes=${this.props.history.location.pathname.substring(
-          1
-        )}`
-      )
-        .then(res => res.json())
-        .then(res => {
-          this.setState({
-            country: res
+        fetch(
+          `https://restcountries.eu/rest/v2/alpha?codes=${this.props.history.location.pathname.substring(
+            1
+          )}`
+        )
+          .then(res => res.json())
+          .then(res => {
+            this.setState({
+              country: res
+            });
           });
-        });
       }
     });
   };
   componentDidMount() {
-    debugger
     if (this.props.location.pathname.length > 4) {
       fetch(
         `https://restcountries.eu/rest/v2/name/${this.props.location.pathname.substring(
@@ -162,7 +157,7 @@ class CountryProfile extends Component {
       )
         .then(res => {
           let a = res.json();
-          console.log(a);
+
           return a;
         })
         .then(res => {
@@ -185,8 +180,6 @@ class CountryProfile extends Component {
     }
   }
   render() {
-    console.log(this.props, 'props inside of cp')
-    console.log(this.state.country, "state");
     const { classes } = this.props;
     return (
       <div style={{}}>
@@ -206,7 +199,7 @@ class CountryProfile extends Component {
               }}
             >
               <IconButton
-                onClick={() =>this.props.history.go(-1)}
+                onClick={() => this.props.history.go(-1)}
                 className={classes.iconButton}
                 disableRipple={true}
                 disableFocusRipple={true}
@@ -228,6 +221,7 @@ class CountryProfile extends Component {
             {this.state.country !== null
               ? this.state.country.map(country => (
                   <Card
+                    key={country.name}
                     style={{
                       width: "100%",
                       minHeight: "100vh",
@@ -302,12 +296,12 @@ class CountryProfile extends Component {
                           </Typography>
                           {country.borders.map((country, i) => (
                             <Link
+                              key={i}
                               className={classes.link}
                               to={`/${country}`}
                               onClick={e => this.handleClick(e)}
                             >
                               <Button
-                                key={i}
                                 className={classes.button}
                                 variant="contained"
                                 color="primary"

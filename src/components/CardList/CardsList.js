@@ -41,7 +41,7 @@ const styles = theme => ({
   }
 });
 const Cards = props => {
-  console.log(props);
+ 
   const { classes, palette } = props;
 
   let countryData;
@@ -51,7 +51,7 @@ const Cards = props => {
       country.name.toLocaleLowerCase().includes(props.name.toLocaleLowerCase())
     );
   }
-  console.log("country data is", countryData);
+  
 
   if (props.loading === false && props.data !== null && props.name === null) {
     countries = [];
@@ -64,7 +64,7 @@ const Cards = props => {
     countries = [];
     countryData.map((country, i) => {
       return countries.push(
-        <CountryCard country={country} palette={palette} />
+        <CountryCard key={i} country={country} palette={palette} />
       );
     });
   } else {
