@@ -18,12 +18,6 @@ npm install
 npm start
 ```
 
-## Run tests
-
-```sh
-npm run test
-```
-
 ## Author
 
 * Github: [@xdorijanx](https://github.com/xdorijanx)
